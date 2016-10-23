@@ -56,7 +56,7 @@ def exit(message, code=1):
     sys.exit(code)
 
 
-def exec_cmd(command):
+def exec_cmd(command, exit_on_failure=True):
     """
     Executes an external command taking into account errors and logging.
     """
@@ -69,7 +69,9 @@ def exec_cmd(command):
             command = "%s > /dev/null 2>&1" % command
     resp = subprocess.call(command, shell=True)
     if resp != 0:
-        exit("Command [%s] failed" % command, resp)
+        if exit_on_failure:
+            exit("Command [%s] failed" % command, resp)
+    return resp
 
 
 def compress(repo, location):
@@ -133,6 +135,10 @@ def update_repo(repo, backup_dir, with_wiki=False, prune=False):
         exit("could not build command (scm [%s] not recognized?)" % scm)
     debug("Updating %s..." % repo.get('name'))
     exec_cmd(command)
+    if not exec_cmd('git ls-remote --exit-code', False):
+        exec_cmd('git pull --all')
+    else:
+        debug("No reference in %s, empty repository ?" % repo.get('name'))
     wiki_dir = "%s_wiki" % backup_dir
     if with_wiki and repo.get('has_wiki') and os.path.isdir(wiki_dir):
         os.chdir(wiki_dir)
