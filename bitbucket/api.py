@@ -142,7 +142,7 @@ class User(object):
 
     def get(self):
         if self.team is not None:
-            url = api_base + 'teams/'
+            url = api_base + 'teams/%s/' % self.team
         elif self.username is None:
             url = api_base + 'user/'
         else:
