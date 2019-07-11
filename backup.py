@@ -213,7 +213,7 @@ def main():
         )
         if args.team:
           user = bb.user(owner, args.team)
-        else
+        else:
           user = bb.user(owner)
 
         repos = sorted(user.repositories(), key=lambda repo: repo.get("name"))
