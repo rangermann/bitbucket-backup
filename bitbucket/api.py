@@ -106,8 +106,8 @@ class BitBucket(object):
             print("Response data: [{0}]".format(result))
         return result
 
-    def user(self, username):
-        return User(self, username)
+    def user(self, username, team):
+        return User(self, username, team)
 
     @requires_authentication
     def emails(self):
@@ -131,16 +131,19 @@ class User(object):
 
     """API encapsulation for user related bitbucket queries."""
 
-    def __init__(self, bb, username):
+    def __init__(self, bb, username, team):
         self.bb = bb
         self.username = username
+        self.team = team
 
     def repositories(self):
         user_data = self.get()
         return user_data['repositories']
 
     def get(self):
-        if self.username is None:
+        if self.team is not None:
+            url = api_base + 'teams/'
+        elif self.username is None:
             url = api_base + 'user/'
         else:
             url = api_base + 'users/%s/' % self.username
