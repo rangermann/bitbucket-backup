@@ -211,7 +211,7 @@ def main():
             oauth_secret=oauth_secret,
             verbose=_verbose,
         )
-        if args.team
+        if args.team:
           user = bb.user(owner, args.team)
         else
           user = bb.user(owner)
