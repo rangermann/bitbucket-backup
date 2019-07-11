@@ -28,7 +28,7 @@ except ImportError:
 __all__ = ['AuthenticationRequired', 'to_datetime', 'BitBucket']
 
 api_toplevel = 'https://api.bitbucket.org/'
-api_base = '%s1.0/' % api_toplevel
+api_base = '%s2.0/' % api_toplevel
 
 
 class AuthenticationRequired(Exception):
