@@ -211,11 +211,7 @@ def main():
             oauth_secret=oauth_secret,
             verbose=_verbose,
         )
-        if args.team:
-          user = bb.user(owner, args.team)
-        else:
-          user = bb.user(owner)
-
+        user = bb.user(owner)
         repos = sorted(user.repositories(), key=lambda repo: repo.get("name"))
         if not repos:
             print("No repositories found. Are you sure you provided the correct password")
