@@ -352,14 +352,17 @@ def main():
                         )
                 except:
                     if attempt == max_attempts:
-                        raise MaxBackupAttemptsReached(
-                            "repo [%s] is reached maximum number [%d] of backup tries"
-                            % (repo.get("name"), attempt)
-                        )
+                        #raise MaxBackupAttemptsReached(
+                        #    "repo [%s] is reached maximum number [%d] of backup tries"
+                        #    % (repo.get("name"), attempt)
+                        #)
+                        print("repo [%s] is reached maximum number [%d] of backup tries"
+                        % (repo.get("name"), attempt)
                     debug(
                         "Failed to backup repository [%s], keep trying, %d attempts remain"
                         % (repo.get("name"), max_attempts - attempt)
                     )
+                    break
                 else:
                     break
 
